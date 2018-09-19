@@ -6,42 +6,65 @@
     <title>@ViewData["Title"] - MiFondoAFP</title>
 
     <environment include="Development">
+        <link rel="stylesheet" href="customcss/styles-merged.css">
+        <link rel="stylesheet" href="customcss/style.min.css">
+        <link rel="stylesheet" href="customcss/custom.css">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
+        <link rel="stylesheet" href="customcss/styles-merged.css">
+        <link rel="stylesheet" href="customcss/style.min.css">
+        <link rel="stylesheet" href="customcss/custom.css">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
-<body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-page="/Index" class="navbar-brand">MiFondoAFP</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-page="/Index">Home</a></li>
-                    <li><a asp-page="/About">About</a></li>
-                    <li><a asp-page="/Contact">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<body style="padding: 0">
+
+      <!-- START: header -->
+  <header role="banner" class="probootstrap-header" style="padding: 18px; margin: 0">
+    <div class="container-fluid">
+      <!-- <div class="row"> -->
+        <a href="index.html" class="probootstrap-logo">MI Fondo AFP</a>
+        
+        <a href="#" class="probootstrap-burger-menu visible-xs" ><i>Menu</i></a>
+        <div class="mobile-menu-overlay"></div>
+
+        <nav role="navigation" class="probootstrap-nav hidden-xs">
+          <ul class="probootstrap-main-nav">
+            <!-- Sign in -->
+            <li class="probootstrap-cta"><a asp-page="/SignUp" >Ingresar</a></li>
+            <!-- Sign up -->
+            <li class="probootstrap-cta"><a asp-page="/SignIn" >Registrarse</a></li>
+          </ul>
+          <div class="extra-text visible-xs">
+            <a href="#" class="probootstrap-burger-menu"><i>Menu</i></a>
+            <h5>Social</h5>
+            <ul class="social-buttons">
+              <li><a href="#"><i class="icon-twitter"></i></a></li>
+              <li><a href="#"><i class="icon-facebook"></i></a></li>
+              <li><a href="#"><i class="icon-instagram2"></i></a></li>
+            </ul>
+            <p><small>&copy; Copyright 2017. All Rights Reserved.</small></p>
+          </div>
+        </nav>
+
+
+
+      <!-- </div> -->
+    </div>
+
+  </header>
+  <!-- END: header -->
+
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2017 - MiFondoAFP</p>
+            <p>&copy; 2018 - MiFondoAFP</p>
         </footer>
     </div>
 
