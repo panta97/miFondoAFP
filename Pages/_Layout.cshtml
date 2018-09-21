@@ -21,7 +21,26 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+
+    <style>
+            /* background-image: url("~/images/index-background.jpg"); */
+            /* background-position: center; */
+        .background {
+            background-color: rgba(0,0,0,0.6);
+            background-image: url("/images/index-background.jpg");
+            heigh: 100%;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .bolder {
+            font-weight: 400;
+        }
+
+    </style>
 </head>
+
+
 <body style="padding: 0">
 
       <!-- START: header -->
@@ -36,9 +55,15 @@
         <nav role="navigation" class="probootstrap-nav hidden-xs">
           <ul class="probootstrap-main-nav">
             <!-- Sign in -->
-            <li class="probootstrap-cta"><a asp-page="/SignUp" >Ingresar</a></li>
+            <li class="probootstrap-cta"><a asp-page="/SignUp" >Registrarse</a></li>
             <!-- Sign up -->
-            <li class="probootstrap-cta"><a asp-page="/SignIn" >Registrarse</a></li>
+            <li class="probootstrap-cta"><a asp-page="/SignIn" >Ingresar</a></li>
+
+            <!-- three -->
+            <li class="probootstrap-cta"><a class="bolder" asp-page="#" >Datos</a></li>
+            <li class="probootstrap-cta"><a class="bolder" asp-page="#" >Estadistica</a></li>
+            <li class="probootstrap-cta"><a class="bolder" asp-page="#" >Proyección</a></li>
+
           </ul>
           <div class="extra-text visible-xs">
             <a href="#" class="probootstrap-burger-menu"><i>Menu</i></a>
@@ -60,13 +85,20 @@
   </header>
   <!-- END: header -->
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - MiFondoAFP</p>
-        </footer>
-    </div>
+    <!-- body -->
+
+    <body class="background">
+
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; 2018 - MiFondoAFP</p>
+            </footer>
+        </div>
+
+    </body>
+
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
