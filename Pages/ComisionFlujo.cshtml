@@ -1,0 +1,186 @@
+@page
+@model ComisionFlujoModel
+@{
+    ViewData["Title"] = "Comisión por flujo";
+}
+
+
+<section>
+    <h2>Comisión por Flujo</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <form id="my-form" method="post" class="probootstrap-form probootstrap-form-box" style="padding: 40px;">
+          <div class="form-group">
+            <label for="edad">Edad</label>
+            <input type="number" min="1" max="100" name="edad" id="edad" class="form-control" value="23">
+          </div>
+          <div class="form-group">
+            <label for="rentabilidad">Rentabilidad Anual</label>
+            <input type="number" min="1" max="100" name="rentabilidad" id="rentabilidad" class="form-control" value="10">
+          </div>
+          <div class="form-group">
+            <label for="sueldo">Sueldo</label>
+            <input type="number" min="1" name="sueldo" id="sueldo" class="form-control" value="1000">
+          </div>
+          <div class="form-group mb50">
+            <input type="submit" value="Calcular" class="btn btn-primary btn-block">
+          </div>
+        </form>
+        </div>
+        <div class="col-md-6">
+            
+            <canvas id="canvas" width="2136" height="1068" class="chartjs-render-monitor" style="display: block; height: 534px; width: 1068px;"></canvas>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- chartjs logic -->
+<script type="text/javascript" src="~/js/Chart.bundle.js"></script>
+<script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+
+
+    // get form values
+
+    //constantes
+    const edadJubilacion = 65
+
+    // from form
+    let formValues = []
+    let edad = 0
+    let rentabilidadAnual = 0
+    let sueldo = 0
+
+    //calculated
+    let rentabilidadMensual = 0
+    let miFondo = 0
+    let misFondos = []
+
+
+    $(function() { //shorthand document.ready function
+    $('#my-form').on('submit', function(e) { //use on if jQuery 1.7+
+        e.preventDefault();  //prevent form from submitting
+        var data = $("#my-form :input").serializeArray();
+        formValues = data
+
+        edad = Number(formValues[0].value)
+        rentabilidadAnual = Number(formValues[1].value)
+        sueldo = Number(formValues[2].value)
+        
+
+        rentabilidadMensual = (Math.pow(1 + rentabilidadAnual/100, 30 / 360) - 1)
+        miFondo = calcularFondo(0,rentabilidadMensual,sueldo)
+        misFondos = calcularFondos(edad, edadJubilacion, rentabilidadMensual, sueldo)
+        
+
+        // load data to graph
+
+        var barChartData = {
+            labels: getMonths(2018, 2018),
+            datasets: [{
+                label: 'Fondo',
+                backgroundColor: "rgba(138,197,242,1)",
+                borderColor: "rgba(45,143,230,1)",
+				borderWidth: 1,
+                data: misFondos,
+                fill: false,
+            }],
+        }
+
+        var ctx = document.getElementById('canvas').getContext('2d');
+        window.myBar = new Chart(ctx, {
+            type: 'line',
+				data: barChartData,
+				options: {
+					responsive: true,
+					legend: {
+						position: 'top',
+					},
+					title: {
+						display: true,
+						text: 'Comisión por flujo'
+					},
+                    tooltips: {
+					mode: 'index',
+					intersect: false,
+				},
+				hover: {
+					mode: 'nearest',
+					intersect: true
+				},
+				scales: {
+					xAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Mes'
+						}
+					}],
+					yAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Monto'
+						}
+					}]
+				}
+				}
+        });
+
+    });
+    });
+
+    function calcularFondos(edad, edadJubilacion, rentabilidad, sueldo) {
+        let anios = (edadJubilacion - edad) * 12
+        let misFondos = []
+
+        // at the beginning starts at 0
+        let fondoAux = 0
+        let fondoCalculadoAux = 0
+
+        for (let i = 0; i < 12; ++i) {
+            fondoCalculadoAux = calcularFondo(fondoAux,rentabilidad,sueldo)
+            misFondos.push(Number(fondoAux.toFixed(2)))
+            fondoAux = fondoCalculadoAux
+        }
+        
+        return misFondos
+    }
+
+    function calcularFondo(fondo, rentabilidad, sueldo) {
+        return fondo * (1 + rentabilidad) + 0.1 * sueldo
+    }
+
+
+
+    function getMonths(fromYear, toYear) {
+        let monthsTemplate = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
+        let arrayMonths = []
+
+        if (fromYear == toYear) {
+            return concadenateYear(monthsTemplate, fromYear)
+        } else {
+            years = toYear - fromYear
+            
+            for (let i = 0; i <= years; i++) {
+                console.log(Number(fromYear) + i);
+
+                arrayMonths = arrayMonths.concat(concadenateYear(monthsTemplate, fromYear + i))
+                monthsTemplate = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
+            }
+        }
+
+        return arrayMonths
+    }
+
+    function concadenateYear(months, year) {
+        console.log(year);
+        for (let i = 0; i < months.length; i++) {
+            months[i] = months[i] + " " + year
+        }
+        return months
+    }
+
+</script>
