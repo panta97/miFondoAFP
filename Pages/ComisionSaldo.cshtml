@@ -20,7 +20,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                 <label for="">60 años</label>
-                <select class="form-control" id="">
+                <select class="form-control" id="menorSesenta">
                     <optgroup label="Fondo 0">
                     <option>2%</option>
                     <optgroup label="Fondo 1">
@@ -38,7 +38,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                 <label for="">61 a 65 años</label>
-                <select class="form-control" id="">
+                <select class="form-control" id="mayorSesenta">
                     <optgroup label="Fondo 0">
                     <option>2%</option>
                     <optgroup label="Fondo 1">
@@ -110,7 +110,20 @@
         </div>
         <div class="col-md-6">
             
-            <canvas id="canvas" width="2136" height="1068" class="chartjs-render-monitor" style="display: block; height: 534px; width: 1068px;"></canvas>
+            <div class="row">
+                <canvas id="canvas" width="2136" height="1068" class="chartjs-render-monitor" style="display: block; height: 534px; width: 1068px;"></canvas>
+                
+            </div>
+            <div class="row" style="text-align: center">
+                <div class="col-md-6">
+                    <h3>Acumulado SBS</h3>
+                    <h4 id="acummSBS"></h4>
+                </div>
+                <div class="col-md-6">
+                    <h3>Acumulado Azure ML</h3>
+                    <h4 id="acummAML"></h4>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -149,19 +162,29 @@
         edad = Number(formValues[0].value)
         rentabilidadAnual = 10
         sueldo = Number(formValues[1].value)
-        
+
+        rantabilidadMayor = Number($('#mayorSesenta').val().replace('%',''))
+        rentabilidadMenor= Number($('#menorSesenta').val().replace('%',''))
 
         rentabilidadMensual = (Math.pow(1 + rentabilidadAnual/100, 30 / 360) - 1)
-        miFondo = calcularFondo(0,rentabilidadMensual,sueldo)
-        misFondos = calcularFondos(edad, edadJubilacion, rentabilidadMensual, sueldo)
 
-        misFondosRed = calcularFondos(edad, edadJubilacion, rentabilidadMensual, 2000)
+        rentabilidadMayorMensual = (Math.pow(1 + rantabilidadMayor/100, 30 / 360) - 1)
+        rentabilidadMenorMensual = (Math.pow(1 + rentabilidadMenor/100, 30 / 360) - 1)
+
+        miFondo = calcularFondo(0,rentabilidadMensual,sueldo)
+        misFondos = calcularFondos(edad, edadJubilacion,rentabilidadMenorMensual, rentabilidadMenorMensual, sueldo)
+
+        //fondo AZURE ML
+        misFondosRed = calcularFondos(edad, edadJubilacion, rentabilidadMenorMensual, rentabilidadMenorMensual, sueldo + 2000)
         
+        //set accumulados
+        document.getElementById("acummSBS").innerHTML = misFondos.reduce((acc, fondo) => acc + fondo, 0).toFixed(2)
+        document.getElementById("acummAML").innerHTML = misFondosRed.reduce((acc, fondo) => acc + fondo, 0).toFixed(2)
 
         // load data to graph
 
         var barChartData = {
-            labels: getMonths(2018, 2018),
+            labels: getYears(2018, 2018 + edadJubilacion - edad),
             datasets: [{
                 label: 'SBS',
                 backgroundColor: "rgba(138,197,242,1)",
@@ -222,24 +245,30 @@
     });
     });
 
-    function calcularFondos(edad, edadJubilacion, rentabilidad, sueldo) {
-        let anios = (edadJubilacion - edad) * 12
+    function calcularFondos(edad, edadJubilacion, rentabilidadMenor, rentabilidadMayor, sueldo) {
+        let anios = edadJubilacion - edad
         let misFondos = []
 
         // at the beginning starts at 0
         let fondoAux = 0
         let fondoCalculadoAux = 0
 
-        for (let iYear = 0; iYear < 12; iYear++) {
+        let rentabilidad = rentabilidadMenor
 
-            if (iYear == 4) {
-                sueldo += 5000
+        for (let iYear = 0; iYear < anios; iYear++) {
+
+            if (iYear % 4 == 0 && edad < 60) {
+                sueldo += 1500
             }
 
-            if (iYear == 7) {
-                sueldo -= 7000
-            }
+            // if (iYear == 7) {
+            //     sueldo -= 7000
+            // }
 
+            if (edad >= 61) {
+                rentabilidad = rentabilidadMayor
+                sueldo -= 6500
+            }
             
             auxSumMonth = 0
 
@@ -251,6 +280,7 @@
     
             misFondos.push(Number(auxSumMonth.toFixed(2)))
             auxSumMonth = 0
+            edad += 1
         }
 
         
@@ -262,6 +292,21 @@
     }
 
 
+    function getYears(fromYear, toYear) {
+        
+        if (fromYear == toYear) {
+            return [fromYear + '']
+        } else {
+
+            let yearsToReturn = []
+            const years = toYear - fromYear
+            for (let i = 0; i <= years; i++) {
+                yearsToReturn.push(fromYear + i + '')
+            }
+            return yearsToReturn
+        }
+        
+    }
 
     function getMonths(fromYear, toYear) {
         let monthsTemplate = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
