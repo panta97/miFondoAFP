@@ -1,12 +1,12 @@
 @page
 @model ComisionSaldoModel
 @{
-    ViewData["Title"] = "Comisión por flujo";
+    ViewData["Title"] = "Comisión por saldo";
 }
 
 
 <section>
-    <h2>Comisión por Flujo</h2>
+    <h2>Comisión por Saldo</h2>
     <div class="row">
         <div class="col-md-6">
             <form id="my-form" method="post" class="probootstrap-form probootstrap-form-box" style="padding: 40px;">
@@ -103,8 +103,22 @@
           </select>
           </div>
 
+          <div class="form-group">
+          <label for="">AFP</label>
+          <select class="form-control" id="">
+            <option>Habitad</option>
+            <option>Integra</option>
+            <option>Prima</option>
+            <option>Profuturo</option>
+          </select>
+          </div>
+
           <div class="form-group mb50">
             <input type="submit" value="Calcular" class="btn btn-primary btn-block">
+          </div>
+          <div class="form-group mb50">
+        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">Detalle</button>
+
           </div>
         </form>
         </div>
@@ -125,9 +139,90 @@
                 </div>
             </div>
 
+
+            <div class="row" style="text-align: center">
+                <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th>AFP</th>
+                    <th>Comision Sobre Flujo</th>
+                    <th>Comision Anual Sobre Saldo</th>
+                    <th>Prima de seguros</th>
+                    <th>Aporte obligatorio al fondo de pensiones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>HABITAD</td>
+                    <td>1.47%</td>
+                    <td>1.47%</td>
+                    <td>1.36%</td>
+                    <td>10.00%</td>
+                </tr>
+                <tr>
+                    <td>INTEGRA</td>
+                    <td>1.55%</td>
+                    <td>1.55%</td>
+                    <td>1.36%</td>
+                    <td>10.00%</td>
+                </tr>
+                <tr>
+                    <td>PRIMA</td>
+                    <td>1.60%</td>
+                    <td>1.60%</td>
+                    <td>1.36%</td>
+                    <td>10.00%</td>
+                </tr>
+                <tr>
+                    <td>PROFUTURO</td>
+                    <td>1.69%</td>
+                    <td>1.69%</td>
+                    <td>1.36%</td>
+                    <td>10.00%</td>
+                </tr>
+                </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
 </section>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Supuestos ulilizados para el cálculo:</h4>
+        </div>
+        <div class="modal-body">
+            <ul>
+                <li>Fecha de Nacimiento:</li>
+                <li>Condición:</li>
+                <li>Sexo:</li>
+                <li>Beneficiarios:</li>
+                <li>Saldo de tu cuenta:</li>
+                <li>Esquema de comisión:</li>
+                <li>Modalidad de pensión:</li>
+                <li>Tipo de fondo:</li>
+                <li>Rentabilidad fondo:</li>
+                <li>Regularidad de aportes(densidad):</li>
+                <li>Tasa de interés:</li>
+                <li>Aporte Mensual Obligatorio:</li>
+                <li>N de remuneraciones al año:</li>
+                <li>N de remuneraciones al mes:</li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 
 
 <!-- chartjs logic -->
@@ -184,7 +279,7 @@
         // load data to graph
 
         var barChartData = {
-            labels: getYears(2018, 2018 + edadJubilacion - edad),
+            labels: getYears(edad, edadJubilacion),
             datasets: [{
                 label: 'SBS',
                 backgroundColor: "rgba(138,197,242,1)",
@@ -228,7 +323,7 @@
 						display: true,
 						scaleLabel: {
 							display: true,
-							labelString: 'Mes'
+							labelString: 'Año'
 						}
 					}],
 					yAxes: [{
