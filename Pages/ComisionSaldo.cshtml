@@ -14,8 +14,26 @@
             <label for="edad">Edad</label>
             <input type="number" min="1" max="100" name="edad" id="edad" class="form-control">
           </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label" for="date">Fecha de Nacimiento</label>
+                    <input class="form-control" id="date" name="date" placeholder="yyyy-mm-dd" type="text"/>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Condición</label>
+                    <select class="form-control" id="menorSesenta">
+                        <option>Sano</option>
+                        <option>Enfermo</option>
+                    </select>
+                    </div>
+            </div>
+        </div>
              
-        <label>Rentabilidad</label>
+        <h4>Rentabilidad</h4>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -52,47 +70,64 @@
             </div>
         </div>
 
-          <div class="form-group">
-            <label for="sueldo">Sueldo</label>
-            <input type="number" min="1" name="sueldo" id="sueldo" class="form-control">
-          </div>
-
-          <div class="form-group">
-          <label for="">Género</label>
-          <select class="form-control" id="">
-            <option>Masculino</option>
-            <option>Femenino</option>
-          </select>
-          </div>
-
-          <div class="form-group">
-          <label for="">Grado</label>
-          <select class="form-control" id="">
-            <option>Universidad</option>
-            <option>Sin Universidad</option>
-          </select>
-          </div>
-
-           <div class="row">
-               <div class="col-md-offset-3 col-md-9">
+        <div class="row">
+            <div class="col-md-6">
                 <div class="form-group">
-                    <label for="">Tipo Universidad</label>
+                    <div class="form-group">
+                        <label for="sueldo">Sueldo</label>
+                        <input type="number" min="1" name="sueldo" id="sueldo" class="form-control">
+                    </div>       
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="sueldo">Saldo cuenta anterior</label>
+                        <input type="number" min="1" name="saldoAnterior" id="saldoAnterior" class="form-control">
+                    </div>       
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Género</label>
                     <select class="form-control" id="">
-                        <option>Privada</option>
-                        <option>Publica</option>
+                        <option>Masculino</option>
+                        <option>Femenino</option>
                     </select>
                 </div>
+            </div>
+            <div class="col-md-6">
                 <div class="form-group">
-                    <label for="">Nivel</label>
+                    <label for="">Grado</label>
                     <select class="form-control" id="">
-                        <option>Bachiller</option>
-                        <option>Maestria</option>
-                        <option>Doctorado</option>
-                    </select>
+                        <option>Universidad</option>
+                        <option>Sin Universidad</option>
+                    </select>      
                 </div>
-               </div>
-           </div> 
-
+                <div class="row">
+                    <div class="col-md-offset-3 col-md-9">
+                        <div class="form-group">
+                            <label for="">Tipo Universidad</label>
+                            <select class="form-control" id="">
+                                <option>Privada</option>
+                                <option>Publica</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Nivel</label>
+                            <select class="form-control" id="">
+                                <option>Bachiller</option>
+                                <option>Maestria</option>
+                                <option>Doctorado</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>                 
+            </div>
+        </div>
 
 
           <div class="form-group">
@@ -112,6 +147,13 @@
             <option>Profuturo</option>
           </select>
           </div>
+
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="sueldo">Expectativa de vida proyectada</label>
+                    <input type="number" min="1" name="expVida" id="expVida" class="form-control">
+                </div>       
+            </div>
 
           <div class="form-group mb50">
             <input type="submit" value="Calcular" class="btn btn-primary btn-block">
@@ -225,9 +267,24 @@
   </div>
 
 
-<!-- chartjs logic -->
-<script type="text/javascript" src="~/js/Chart.bundle.js"></script>
 <script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
+
+<!-- date picker -->
+
+<script>
+    $(document).ready(function(){
+      var date_input=$('input[name="date"]'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+        format: 'yyyy-mm-dd',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      };
+      date_input.datepicker(options);
+    })
+</script>
+
 <script>
 
 
