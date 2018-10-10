@@ -13,12 +13,12 @@
     </div>
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
-        <form method="post" class="probootstrap-form probootstrap-form-box" >
+        <form method="post" class="probootstrap-form probootstrap-form-box" id="my-form">
           <div class="form-group">
-            <label for="username">Email</label>
+            <label for="username">Username</label>
             <input type="username" name="username" id="username" class="form-control">
           </div>
-          <div class="form-group">
+          <div class="form-group" id="below">
             <label for="username">Password</label>
             <input type="password" name="password" id="password" class="form-control">
           </div>
@@ -30,3 +30,33 @@
     </div>
   </div>
 </section>
+
+<script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="~/js/jquery.validate.js"></script>
+
+<script>
+
+    $(function() { //shorthand document.ready function
+    $('#my-form').on('submit', function(e) { //use on if jQuery 1.7+
+        e.preventDefault();  //prevent form from submitting
+        var data = $("#my-form :input").serializeArray();
+        formValues = data
+        
+        username = formValues[0]["value"]
+        password = formValues[1]["value"]
+
+        usernameFS = window.localStorage.getItem("username");
+        passwordFS = window.localStorage.getItem("password");
+
+        if (username == usernameFS && password == passwordFS) {
+          window.location.href="/Datos";
+          
+        } else {
+          $( "#msg-danger" ).remove();
+          $( "#my-form" ).append( "<div class='alert alert-danger' id='msg-danger'><strong>Warning!</strong> Usuario o contraseña incorrectos</div>" );
+        }
+        });
+
+    });
+    
+</script>
