@@ -42,10 +42,11 @@
 <script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
 <script>
 
-    $(function() { //shorthand document.ready function
-    $('#my-form').on('submit', function(e) { //use on if jQuery 1.7+
-      window.location.href="/Datos";
-    });
+    $(function() {
+    $('#my-form').on('submit', function(e) { 
+        e.preventDefault();
+        window.location.href="/Datos";		
+        });
     });
     
 </script>

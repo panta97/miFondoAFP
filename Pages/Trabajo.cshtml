@@ -16,19 +16,23 @@
       <div class="col-md-6 col-md-offset-3">
         <form method="post" class="probootstrap-form probootstrap-form-box" id="my-form">
           <div class="form-group">
-            <label for="username">Centro de egreso</label>
+            <label for="username">Salario</label>
+            <input type="number" name="username"  class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="username">Trabajo actual</label>
             <input type="text" name="username"  class="form-control" required>
           </div>
           <div class="form-group">
-            <label for="username">Ultimos estudios</label>
+            <label for="username">Cargo actual</label>
             <input type="text" name="username"  class="form-control" required>
           </div>
           <div class="form-group">
-            <label for="username">Años en la universidad</label>
-            <input type="text" name="username"  class="form-control" required>
+            <label for="username">Años Laborando</label>
+            <input type="number" name="username"  class="form-control" required>
           </div>
           <div class="form-group">
-            <label for="username">Carrera</label>
+            <label for="username">Trabajo independiente</label>
             <input type="text" name="username"  class="form-control" required>
           </div>
             <div class="form-group mb50">
@@ -43,10 +47,11 @@
 <script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
 <script>
 
-    $(function() { //shorthand document.ready function
-    $('#my-form').on('submit', function(e) { //use on if jQuery 1.7+
-      window.location.href="/Datos";
-    });
+    $(function() {
+    $('#my-form').on('submit', function(e) { 
+        e.preventDefault();
+        window.location.href="/Datos";		
+        });
     });
     
 </script>
