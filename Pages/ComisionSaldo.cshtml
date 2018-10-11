@@ -9,13 +9,26 @@
     <h2>Comisión por Saldo</h2>
     <div class="row">
         <div class="col-md-6">
-            <form id="my-form" method="post" class="probootstrap-form probootstrap-form-box" style="padding: 40px;">
-          <div class="form-group">
-            <label for="edad">Edad</label>
-            <input type="number" min="1" max="100" name="edad" id="edad" class="form-control">
-          </div>
+        <form id="my-form" method="post" class="probootstrap-form probootstrap-form-box" style="padding: 40px;">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label" for="date">Fecha de Nacimiento</label>
+                    <input class="form-control" id="date" name="date" placeholder="yyyy-mm-dd" type="text"/>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Condición</label>
+                    <select class="form-control" id="condicion">
+                        <option>Sano</option>
+                        <option>Enfermo</option>
+                    </select>
+                    </div>
+            </div>
+        </div>
              
-        <label>Rentabilidad</label>
+        <h4>Rentabilidad</h4>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -52,74 +65,115 @@
             </div>
         </div>
 
-          <div class="form-group">
-            <label for="sueldo">Sueldo</label>
-            <input type="number" min="1" name="sueldo" id="sueldo" class="form-control">
-          </div>
-
-          <div class="form-group">
-          <label for="">Género</label>
-          <select class="form-control" id="">
-            <option>Masculino</option>
-            <option>Femenino</option>
-          </select>
-          </div>
-
-          <div class="form-group">
-          <label for="">Grado</label>
-          <select class="form-control" id="">
-            <option>Universidad</option>
-            <option>Sin Universidad</option>
-          </select>
-          </div>
-
-           <div class="row">
-               <div class="col-md-offset-3 col-md-9">
+        <div class="row">
+            <div class="col-md-6">
                 <div class="form-group">
-                    <label for="">Tipo Universidad</label>
-                    <select class="form-control" id="">
-                        <option>Privada</option>
-                        <option>Publica</option>
+                    <div class="form-group">
+                        <label for="sueldo">Sueldo</label>
+                        <input type="number" min="1" name="sueldo" id="sueldo" class="form-control">
+                    </div>       
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="sueldo">Saldo cuenta anterior</label>
+                        <input type="number" min="1" name="saldoAnterior" id="saldoAnterior" class="form-control">
+                    </div>       
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Género</label>
+                    <select class="form-control" id="genero">
+                        <option>Masculino</option>
+                        <option>Femenino</option>
                     </select>
                 </div>
+            </div>
+            <div class="col-md-6">
                 <div class="form-group">
-                    <label for="">Nivel</label>
+                    <label for="">Grado</label>
+                    <select class="form-control" id="university">
+                        <option>Universidad</option>
+                        <option>Sin Universidad</option>
+                    </select>      
+                </div>
+                <div class="row" id="uniShow">
+                    <div class="col-md-offset-3 col-md-9">
+                        <div class="form-group">
+                            <label for="">Tipo Universidad</label>
+                            <select class="form-control" id="">
+                                <option>Privada</option>
+                                <option>Publica</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Nivel</label>
+                            <select class="form-control" id="">
+                                <option>Bachiller</option>
+                                <option>Maestria</option>
+                                <option>Doctorado</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>                 
+            </div>
+        </div>
+
+        	<div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="">Zona</label>
                     <select class="form-control" id="">
-                        <option>Bachiller</option>
-                        <option>Maestria</option>
-                        <option>Doctorado</option>
+                        <option>Lima</option>
+                        <option>Provincia</option>
                     </select>
                 </div>
-               </div>
-           </div> 
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    
+                <label for="">AFP</label>
+                <select class="form-control" id="">
+                    <option>Habitat</option>
+                    <option>Integra</option>
+                    <option>Prima</option>
+                    <option>Profuturo</option>
+                </select>
+                    
+                </div>
+            </div>
+        </div>
 
 
+        	<div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label" for="date">Vida proyectada</label>
+                    <input class="form-control" id="date" name="date" placeholder="yyyy-mm-dd" type="text"/>
+                </div>
+            </div>
+        </div>
 
-          <div class="form-group">
-          <label for="">Zona</label>
-          <select class="form-control" id="">
-            <option>Lima</option>
-            <option>Provincia</option>
-          </select>
-          </div>
 
-          <div class="form-group">
-          <label for="">AFP</label>
-          <select class="form-control" id="">
-            <option>Habitad</option>
-            <option>Integra</option>
-            <option>Prima</option>
-            <option>Profuturo</option>
-          </select>
-          </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group mb50">
+                    <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal" id="modal">Detalle</button>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-group mb50">
+                    <input type="submit" value="Calcular" class="btn btn-primary btn-block">
+                </div>
+            </div>
+        </div>
 
-          <div class="form-group mb50">
-            <input type="submit" value="Calcular" class="btn btn-primary btn-block">
-          </div>
-          <div class="form-group mb50">
-        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">Detalle</button>
 
-          </div>
         </form>
         </div>
         <div class="col-md-6">
@@ -196,25 +250,54 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Supuestos ulilizados para el cálculo:</h4>
+          <h4 class="modal-title">Supuestos ulilizados para el cálculo</h4>
         </div>
         <div class="modal-body">
-            <ul>
-                <li>Fecha de Nacimiento:</li>
-                <li>Condición:</li>
-                <li>Sexo:</li>
-                <li>Beneficiarios:</li>
-                <li>Saldo de tu cuenta:</li>
-                <li>Esquema de comisión:</li>
-                <li>Modalidad de pensión:</li>
-                <li>Tipo de fondo:</li>
-                <li>Rentabilidad fondo:</li>
-                <li>Regularidad de aportes(densidad):</li>
-                <li>Tasa de interés:</li>
-                <li>Aporte Mensual Obligatorio:</li>
-                <li>N de remuneraciones al año:</li>
-                <li>N de remuneraciones al mes:</li>
-            </ul>
+            
+            <div>
+                <ul class="d-list">
+                    <li>Fecha de Nacimiento: <span id="dFecNac"></span> </li>
+                    <li>Condición: <span id="dCond"></span> </li>
+                    <li>Sexo: <span id="dSex"></span> </li>
+                    <li>Beneficiarios: <span id="dBen"></span> </li>
+                    <li>Saldo de tu cuenta: <span id="dSal"></span> </li>
+                    <li>Esquema de comisión: <span id="dEsq"></span> </li>
+                    <li>Modalidad de pensión: <span id="dMod"></span> </li>
+                    <li>Tipo de fondo: <span id="dTip"></span> </li>
+                    <li>Rentabilidad fondo: <span id="dRen"></span> </li>
+                    <li>Regularidad de aportes(densidad): <span id="dReg"></span> </li>
+                    <li>Tasa de interés: <span id="dTas"></span> </li>
+                    <li>Aporte Mensual Obligatorio: <span id="dApo"></span> </li>
+                    <li>N de remuneraciones al año: <span id="dNremAnio"></span> </li>
+                    <li>N de remuneraciones al mes: <span id="dNremMes"></span> </li>
+                </ul>
+            </div>
+
+            <div class="d-legal">
+                <h3>Notas Legales</h3>
+                <p>
+                    En la estimación se considera: en el caso del hombre, una cónyuge 5 años
+                    menor; y en el caso de la mujer un cónyuge 5 años mayor, según Circular
+                    AFP-085-2007
+                </p>
+
+                <p>
+                    Los montos de pensión resultantes son una estimación. Cualquier variación
+                    en los supuestos puede modificar los resultados de manera importante. La
+                    tasa de descueto y la rentabilidad son fluctuantes y varían de acuerdo y
+                    rentabilidades pasadas pueden variar en el futuro. Estas cifras no
+                    comprometen de modo alguno a la AFP a garantizar un monto de pensión
+                    determinado.
+                </p>
+                <p>
+                    Si tienes una edad mayor o igual a 55 años, te sugerimos acercarte a una
+                    de las agencias de AFP para recibir información complementaria acerca
+                    de las variables que determinan tu pensión. También puedes conocer los diferentes
+                    <a href="https://www.google.com/">tipos de jubilación</a> y <a href="https://www.google.com/">modalidades de pensión</a> que te ofrece el
+                    SPP
+                </p>
+            </div>
+            
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -225,9 +308,41 @@
   </div>
 
 
-<!-- chartjs logic -->
-<script type="text/javascript" src="~/js/Chart.bundle.js"></script>
 <script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
+<!-- toggle univerdad -->
+<script>
+    $(document).ready(function(){
+        $("#university").change(function(){
+            var value = $("#university option:selected").val();
+                console.log(value);
+
+            if (value == "Universidad") {
+                $("#uniShow").show();
+
+            } else {
+                $("#uniShow").hide();
+            }
+        });
+    });
+
+</script>
+
+<!-- date picker -->
+
+<script>
+    $(document).ready(function(){
+      var date_input=$('input[name="date"]'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+        format: 'yyyy-mm-dd',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      };
+      date_input.datepicker(options);
+    })
+</script>
+
 <script>
 
 
@@ -254,7 +369,7 @@
         var data = $("#my-form :input").serializeArray();
         formValues = data
 
-        edad = Number(formValues[0].value)
+        edad = (new Date().getFullYear()) - Number(formValues[0].value.split("-", 1))
         rentabilidadAnual = 10
         sueldo = Number(formValues[1].value)
 
@@ -323,7 +438,7 @@
 						display: true,
 						scaleLabel: {
 							display: true,
-							labelString: 'Año'
+							labelString: 'Edad'
 						}
 					}],
 					yAxes: [{
@@ -456,5 +571,31 @@
 
         return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
     }
+
+
+
+    $("#modal").click(function(){
+        
+        var data = $("#my-form :input").serializeArray();
+        formValues = data
+
+        var label=$("#menorSesenta :selected").parent().attr("label");
+
+
+        $("#dFecNac").text(formValues[0]["value"]);
+        $("#dCond").text($("#condicion").val());
+        $("#dSex").text($("#genero").val());
+        $("#dBen").text("Por definir*");
+        $("#dSal").text(formValues[1]["value"]);
+        $("#dEsq").text("Por Saldo");
+        $("#dMod").text("Por definir*");
+        $("#dTip").text($("#menorSesenta :selected").parent().attr("label"));
+        $("#dRen").text($("#menorSesenta").val());
+        $("#dReg").text("Por definir*");
+        $("#dTas").text("3%");
+        $("#dApo").text("10%");
+        $("#dNremAnio").text(12);
+        $("#dNremMes").text(12);
+    });
 
 </script>
