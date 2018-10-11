@@ -85,11 +85,21 @@
 
             </div>
         </div>
+
+        <div>asa @Model.message </div>
+
     </div>
   </section>
 
   <script type="text/javascript" src="~/js/Chart.bundle.js"></script>
+  
+  <script>
+      
+      var valor = "@Model.message";
 
+      console.log(valor);
+
+  </script>
   <script>
         var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 	    var color = Chart.helpers.color;

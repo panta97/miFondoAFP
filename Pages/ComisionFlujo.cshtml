@@ -1,5 +1,5 @@
 @page
-@model ComisionSaldoModel
+@model ComisionFlujoModel
 @{
     ViewData["Title"] = "Comisión por flujo";
 }
@@ -154,7 +154,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="control-label" for="date">Vida proyectada</label>
-                    <input class="form-control" id="date" name="date" placeholder="yyyy-mm-dd" type="text"/>
+                    <input type="number" min="1" name="vidaProyectada" id="vidaProyectada" class="form-control">
                 </div>
             </div>
         </div>
@@ -375,6 +375,9 @@
 
         rentabilidadMayorMensual = (Math.pow(1 + rantabilidadMayor/100, 30 / 360) - 1)
         rentabilidadMenorMensual = (Math.pow(1 + rentabilidadMenor/100, 30 / 360) - 1)
+
+        var msj = "@Model.Mensaje";
+        alert(msj);
 
         miFondo = calcularFondo(0,rentabilidadMensual,sueldo)
         misFondos = calcularFondos(edad, edadJubilacion,rentabilidadMenorMensual, rentabilidadMenorMensual, sueldo)
