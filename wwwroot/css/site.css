@@ -33,3 +33,26 @@ body {
         display: none;
     }
 }
+
+/* detalle part */
+
+.d-list {
+    font-size: 12pt;
+}
+
+.d-list > li {
+    font-weight: 500;
+}
+
+.d-list > li > span {
+    font-weight: 300;
+}
+
+.d-legal {
+    margin: 42px;
+}
+
+.d-legal > p {
+    font-style: italic;
+    font-size: 12pt;
+}
