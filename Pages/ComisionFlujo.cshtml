@@ -389,6 +389,37 @@
         document.getElementById("acummSBS").innerHTML = "S/." + formatMoney(misFondos.reduce((acc, fondo) => acc + fondo, 0).toFixed(2))
         document.getElementById("acummAML").innerHTML = "S/." + formatMoney(misFondosRed.reduce((acc, fondo) => acc + fondo, 0).toFixed(2))
 
+        // LLAMAR METODO DE C#
+
+        var edad = 23;
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/azure',
+            dataType: 'json',
+            contentType: 'application/json',
+            processData: false,
+            data: JSON.stringify({
+	        "edad" : edad,
+	        "grado" : "asfd",
+	        "priv" : "asdf",
+	        "uni" : "uniasd",
+	        "genero" : "sfd"
+            }),
+            success: function(resp){
+                
+                //implementar lógica aqui
+
+
+
+                
+                console.log(resp);
+
+
+            }
+        });
+
+
         // load data to graph
 
         var barChartData = {
