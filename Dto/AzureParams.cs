@@ -7,5 +7,6 @@ namespace MiFondoAFP.Dto
         public string priv { get; set; }
         public string uni { get; set; }
         public string genero { get; set; }
+        public string ciudad { get; set; }
     }
 }

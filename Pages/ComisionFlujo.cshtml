@@ -404,97 +404,100 @@
 	        "grado" : "asfd",
 	        "priv" : "asdf",
 	        "uni" : "uniasd",
-	        "genero" : "sfd"
+            "genero" : "sfd",
+            "ciudad" : "Lima"
             }),
             success: function(resp){
                 
                 //implementar lógica aqui
 
-
+                var resultado = resp;
 
                 
                 console.log(resp);
 
 
+
+
+                // load data to graph
+                var barChartData = {
+                    labels: getYears(edad, edadJubilacion),
+                    datasets: [{
+                        label: 'SBS',
+                        backgroundColor: "rgba(138,197,242,1)",
+                        borderColor: "rgba(45,143,230,1)",
+                        borderWidth: 1,
+                        data: misFondos,
+                        fill: false,
+                    },{
+                        label: 'Azure ML',
+                        backgroundColor: "rgba(253,159,180,1)",
+                        borderColor: "rgba(252,72,113,1)",
+                        borderWidth: 1,
+                        data: misFondosRed,
+                        fill: false,
+                    }],
+                }
+                var ctx = document.getElementById('canvas').getContext('2d');
+                window.myBar = new Chart(ctx, {
+                    type: 'line',
+                        data: barChartData,
+                        options: {
+                            responsive: true,
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Comisión por flujo'
+                            },
+                            tooltips: {
+                            mode: 'index',
+                            intersect: false,
+                        },
+                        hover: {
+                            mode: 'nearest',
+                            intersect: true
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Edad'
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Monto'
+                                },
+                                ticks: {
+                                beginAtZero: true,
+                                stepSize: 500000,
+                                // Return an empty string to draw the tick line but hide the tick label
+                                // Return `null` or `undefined` to hide the tick line entirely
+                                userCallback: function(value, index, values) {
+                                    // Convert the number to a string and splite the string every 3 charaters from the end
+                                    value = value.toString();
+                                    value = value.split(/(?=(?:...)*$)/);
+                                    
+                                    // Convert the array to a string and format the output
+                                    value = value.join('.');
+                                    return 'S/.' + value;
+                                    }
+                                }
+                            }]
+                        }
+                        }
+                });
+
             }
         });
 
 
-        // load data to graph
-
-        var barChartData = {
-            labels: getYears(edad, edadJubilacion),
-            datasets: [{
-                label: 'SBS',
-                backgroundColor: "rgba(138,197,242,1)",
-                borderColor: "rgba(45,143,230,1)",
-				borderWidth: 1,
-                data: misFondos,
-                fill: false,
-            },{
-                label: 'Azure ML',
-                backgroundColor: "rgba(253,159,180,1)",
-                borderColor: "rgba(252,72,113,1)",
-				borderWidth: 1,
-                data: misFondosRed,
-                fill: false,
-            }],
-        }
-
-        var ctx = document.getElementById('canvas').getContext('2d');
-        window.myBar = new Chart(ctx, {
-            type: 'line',
-				data: barChartData,
-				options: {
-					responsive: true,
-					legend: {
-						position: 'top',
-					},
-					title: {
-						display: true,
-						text: 'Comisión por flujo'
-					},
-                    tooltips: {
-					mode: 'index',
-					intersect: false,
-				},
-				hover: {
-					mode: 'nearest',
-					intersect: true
-				},
-				scales: {
-					xAxes: [{
-						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: 'Edad'
-						}
-					}],
-					yAxes: [{
-						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: 'Monto'
-						},
-                        ticks: {
-                        beginAtZero: true,
-                        stepSize: 500000,
-                        // Return an empty string to draw the tick line but hide the tick label
-                        // Return `null` or `undefined` to hide the tick line entirely
-                        userCallback: function(value, index, values) {
-                            // Convert the number to a string and splite the string every 3 charaters from the end
-                            value = value.toString();
-                            value = value.split(/(?=(?:...)*$)/);
-                            
-                            // Convert the array to a string and format the output
-                            value = value.join('.');
-                            return 'S/.' + value;
-                            }
-                        }
-					}]
-				}
-				}
-        });
+        
 
     });
     });
