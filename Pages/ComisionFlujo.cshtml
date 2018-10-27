@@ -193,6 +193,30 @@
                 </div>
             </div>
 
+            <div class="row" style="text-align: center">
+                <h3>Resultados</h3>
+                <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Tipo de Fondo</th>
+                    <th>AFP</th>
+                    <th>ML</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Fondo Acumulado</td>
+                    <td id="fonAccAFP"></td>
+                    <td id="fonAccML"></td>
+                </tr>
+                <tr>
+                    <td>Pensión mensual</td>
+                    <td id="penMenAFP"></td>
+                    <td id="penMenML"></td>
+                </tr>
+                </tbody>
+                </table>
+            </div>
 
             <div class="row" style="text-align: center">
                 <table class="table">
@@ -376,8 +400,8 @@
         rentabilidadMayorMensual = (Math.pow(1 + rantabilidadMayor/100, 30 / 360) - 1)
         rentabilidadMenorMensual = (Math.pow(1 + rentabilidadMenor/100, 30 / 360) - 1)
 
-        var msj = "@Model.Mensaje";
-        alert(msj);
+        // var msj = "@Model.Mensaje";
+        // alert(msj);
 
         miFondo = calcularFondo(0,rentabilidadMensual,sueldo)
         misFondos = calcularFondos(edad, edadJubilacion,rentabilidadMenorMensual, rentabilidadMenorMensual, sueldo)
