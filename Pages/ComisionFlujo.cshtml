@@ -413,6 +413,14 @@
         document.getElementById("acummSBS").innerHTML = "S/." + formatMoney(misFondos.reduce((acc, fondo) => acc + fondo, 0).toFixed(2))
         document.getElementById("acummAML").innerHTML = "S/." + formatMoney(misFondosRed.reduce((acc, fondo) => acc + fondo, 0).toFixed(2))
 
+        //set tabla 2
+
+        document.getElementById("fonAccAFP").innerHTML = "S/." + formatMoney(misFondos.reduce((acc, fondo) => acc + fondo, 0).toFixed(2))
+        document.getElementById("fonAccML").innerHTML = "S/." + formatMoney(misFondosRed.reduce((acc, fondo) => acc + fondo, 0).toFixed(2))
+
+        document.getElementById("penMenAFP").innerHTML = "S/." + formatMoney(misFondos[0].toFixed(2))
+        document.getElementById("penMenML").innerHTML = "S/." + formatMoney(misFondosRed[0].toFixed(2))
+
         // LLAMAR METODO DE C#
 
         var edad = 23;
