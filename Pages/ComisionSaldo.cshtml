@@ -173,95 +173,14 @@
             </div>
         </div>
 
-
         </form>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" id="graph-tables">
             
-            <div class="row" id="rowcanvas">
-                <canvas id="canvas" width="2136" height="2068" class="chartjs-render-monitor"></canvas>
-                
+            <div id="div-loader" class="loader">
+                <div id="loader-ajax"></div>
             </div>
-            <div class="row" style="text-align: center">
-                <div class="col-md-6">
-                    <h3>Acumulado SBS</h3>
-                    <h4 id="acummSBS"></h4>
-                </div>
-                <div class="col-md-6">
-                    <h3>Acumulado Azure ML</h3>
-                    <h4 id="acummAML"></h4>
-                </div>
-            </div>
-
-            <div class="row" style="text-align: center">
-                <h3>Resultados</h3>
-                <table class="table">
-                <thead class="thead-dark">
-                <tr>
-                    <th>Tipo de Fondo</th>
-                    <th>AFP</th>
-                    <th>ML</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>Fondo Acumulado</td>
-                    <td id="fonAccAFP"></td>
-                    <td id="fonAccML"></td>
-                </tr>
-                <tr>
-                    <td>Pensión mensual</td>
-                    <td id="penMenAFP"></td>
-                    <td id="penMenML"></td>
-                </tr>
-                </tbody>
-                </table>
-            </div>
-
-            <div class="row" style="text-align: center">
-                <table class="table">
-                <thead class="thead-dark">
-                <tr>
-                    <th>AFP</th>
-                    <th>Comision Sobre Flujo</th>
-                    <th>Comision Anual Sobre Saldo</th>
-                    <th>Prima de seguros</th>
-                    <th>Aporte obligatorio al fondo de pensiones</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>HABITAD</td>
-                    <td>1.47%</td>
-                    <td>1.47%</td>
-                    <td>1.36%</td>
-                    <td>10.00%</td>
-                </tr>
-                <tr>
-                    <td>INTEGRA</td>
-                    <td>1.55%</td>
-                    <td>1.55%</td>
-                    <td>1.36%</td>
-                    <td>10.00%</td>
-                </tr>
-                <tr>
-                    <td>PRIMA</td>
-                    <td>1.60%</td>
-                    <td>1.60%</td>
-                    <td>1.36%</td>
-                    <td>10.00%</td>
-                </tr>
-                <tr>
-                    <td>PROFUTURO</td>
-                    <td>1.69%</td>
-                    <td>1.69%</td>
-                    <td>1.36%</td>
-                    <td>10.00%</td>
-                </tr>
-                </tbody>
-                </table>
-            </div>
-
+            
         </div>
     </div>
 </section>
@@ -390,6 +309,10 @@
     $(function() { //shorthand document.ready function
     $('#my-form').on('submit', function(e) { //use on if jQuery 1.7+
         e.preventDefault();  //prevent form from submitting
+
+        // poner clase loader
+        $("#loader-ajax").addClass("loader_ajax_small")
+
         var data = $("#my-form :input").serializeArray();
         formValues = data
 
@@ -411,93 +334,139 @@
         //fondo AZURE ML
         misFondosRed = calcularFondos(edad, edadJubilacion, rentabilidadMenorMensual, rentabilidadMenorMensual, sueldo + 2000)
         
-        //set accumulados
-        document.getElementById("acummSBS").innerHTML = "S/." + formatMoney(misFondos.reduce((acc, fondo) => acc + fondo, 0).toFixed(2))
-        document.getElementById("acummAML").innerHTML = "S/." + formatMoney(misFondosRed.reduce((acc, fondo) => acc + fondo, 0).toFixed(2))
 
-        //set tabla 2
+        // LLAMAR METODO DE C#
 
-        document.getElementById("fonAccAFP").innerHTML = "S/." + formatMoney(misFondos.reduce((acc, fondo) => acc + fondo, 0).toFixed(2))
-        document.getElementById("fonAccML").innerHTML = "S/." + formatMoney(misFondosRed.reduce((acc, fondo) => acc + fondo, 0).toFixed(2))
+        var edad = 23;
 
-        document.getElementById("penMenAFP").innerHTML = "S/." + formatMoney(misFondos[0].toFixed(2))
-        document.getElementById("penMenML").innerHTML = "S/." + formatMoney(misFondosRed[0].toFixed(2))
+        $.ajax({
+            type: 'POST',
+            url: '/api/azure',
+            dataType: 'json',
+            contentType: 'application/json',
+            processData: false,
+            data: JSON.stringify({
+	        "edad" : edad,
+	        "grado" : "asfd",
+	        "priv" : "asdf",
+	        "uni" : "uniasd",
+            "genero" : "sfd",
+            "ciudad" : "Lima"
+            }),
+            success: function(resp){
+                
+                //implementar lógica aqui
 
-        // load data to graph
+                var resultado = resp;
 
-        var barChartData = {
-            labels: getYears(edad, edadJubilacion),
-            datasets: [{
-                label: 'SBS',
-                backgroundColor: "rgba(138,197,242,1)",
-                borderColor: "rgba(45,143,230,1)",
-				borderWidth: 1,
-                data: misFondos,
-                fill: false,
-            },{
-                label: 'Azure ML',
-                backgroundColor: "rgba(253,159,180,1)",
-                borderColor: "rgba(252,72,113,1)",
-				borderWidth: 1,
-                data: misFondosRed,
-                fill: false,
-            }],
-        }
+                
+                console.log(resp);
 
-        var ctx = document.getElementById('canvas').getContext('2d');
-        window.myBar = new Chart(ctx, {
-            type: 'line',
-				data: barChartData,
-				options: {
-					responsive: true,
-					legend: {
-						position: 'top',
-					},
-					title: {
-						display: true,
-						text: 'Comisión por flujo'
-					},
-                    tooltips: {
-					mode: 'index',
-					intersect: false,
-				},
-				hover: {
-					mode: 'nearest',
-					intersect: true
-				},
-				scales: {
-					xAxes: [{
-						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: 'Edad'
-						}
-					}],
-					yAxes: [{
-						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: 'Monto'
-						},
-                        ticks: {
-                        beginAtZero: true,
-                        stepSize: 500000,
-                        // Return an empty string to draw the tick line but hide the tick label
-                        // Return `null` or `undefined` to hide the tick line entirely
-                        userCallback: function(value, index, values) {
-                            // Convert the number to a string and splite the string every 3 charaters from the end
-                            value = value.toString();
-                            value = value.split(/(?=(?:...)*$)/);
-                            
-                            // Convert the array to a string and format the output
-                            value = value.join('.');
-                            return 'S/.' + value;
+                console.log('before');
+                setTimeout(function(){
+
+                    // remove class loader
+                    $('#div-loader').hide();
+
+                    console.log('after');
+
+                    var textToAppend = '<div class="row" id="rowcanvas"> <canvas id="canvas" width="2136" height="2068" class="chartjs-render-monitor"></canvas> </div> <div class="row" style="text-align: center"> <div class="col-md-6"> <h3>Acumulado SBS</h3> <h4 id="acummSBS"></h4> </div> <div class="col-md-6"> <h3>Acumulado Azure ML</h3> <h4 id="acummAML"></h4> </div> </div> <div class="row" style="text-align: center"> <h3>Resultados</h3> <table class="table"> <thead class="thead-dark"> <tr> <th>Tipo de Fondo</th> <th>AFP</th> <th>ML</th> </tr> </thead> <tbody> <tr> <td>Fondo Acumulado</td> <td id="fonAccAFP"></td> <td id="fonAccML"></td> </tr> <tr> <td>Pensión mensual</td> <td id="penMenAFP"></td> <td id="penMenML"></td> </tr> </tbody> </table> </div> <div class="row" style="text-align: center"> <table class="table"> <thead class="thead-dark"> <tr> <th>AFP</th> <th>Comision Sobre Flujo</th> <th>Comision Anual Sobre Saldo</th> <th>Prima de seguros</th> <th>Aporte obligatorio al fondo de pensiones</th> </tr> </thead> <tbody> <tr> <td>HABITAD</td> <td>1.47%</td> <td>1.47%</td> <td>1.36%</td> <td>10.00%</td> </tr> <tr> <td>INTEGRA</td> <td>1.55%</td> <td>1.55%</td> <td>1.36%</td> <td>10.00%</td> </tr> <tr> <td>PRIMA</td> <td>1.60%</td> <td>1.60%</td> <td>1.36%</td> <td>10.00%</td> </tr> <tr> <td>PROFUTURO</td> <td>1.69%</td> <td>1.69%</td> <td>1.36%</td> <td>10.00%</td> </tr> </tbody> </table> </div>'
+                    $("#graph-tables").append(textToAppend)
+
+
+                    //set accumulados
+                    document.getElementById("acummSBS").innerHTML = "S/." + formatMoney(misFondos.reduce((acc, fondo) => acc + fondo, 0).toFixed(2))
+                    document.getElementById("acummAML").innerHTML = "S/." + formatMoney(misFondosRed.reduce((acc, fondo) => acc + fondo, 0).toFixed(2))
+
+                    //set tabla 2
+
+                    document.getElementById("fonAccAFP").innerHTML = "S/." + formatMoney(misFondos.reduce((acc, fondo) => acc + fondo, 0).toFixed(2))
+                    document.getElementById("fonAccML").innerHTML = "S/." + formatMoney(misFondosRed.reduce((acc, fondo) => acc + fondo, 0).toFixed(2))
+
+                    document.getElementById("penMenAFP").innerHTML = "S/." + formatMoney(misFondos[0].toFixed(2))
+                    document.getElementById("penMenML").innerHTML = "S/." + formatMoney(misFondosRed[0].toFixed(2))
+
+                    // load data to graph
+                    var barChartData = {
+                        labels: getYears(edad, edadJubilacion),
+                        datasets: [{
+                            label: 'SBS',
+                            backgroundColor: "rgba(138,197,242,1)",
+                            borderColor: "rgba(45,143,230,1)",
+                            borderWidth: 1,
+                            data: misFondos,
+                            fill: false,
+                        },{
+                            label: 'Azure ML',
+                            backgroundColor: "rgba(253,159,180,1)",
+                            borderColor: "rgba(252,72,113,1)",
+                            borderWidth: 1,
+                            data: misFondosRed,
+                            fill: false,
+                        }],
+                    }
+                    var ctx = document.getElementById('canvas').getContext('2d');
+                    window.myBar = new Chart(ctx, {
+                        type: 'line',
+                            data: barChartData,
+                            options: {
+                                responsive: true,
+                                legend: {
+                                    position: 'top',
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Comisión por flujo'
+                                },
+                                tooltips: {
+                                mode: 'index',
+                                intersect: false,
+                            },
+                            hover: {
+                                mode: 'nearest',
+                                intersect: true
+                            },
+                            scales: {
+                                xAxes: [{
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Edad'
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Monto'
+                                    },
+                                    ticks: {
+                                    beginAtZero: true,
+                                    stepSize: 500000,
+                                    // Return an empty string to draw the tick line but hide the tick label
+                                    // Return `null` or `undefined` to hide the tick line entirely
+                                    userCallback: function(value, index, values) {
+                                        // Convert the number to a string and splite the string every 3 charaters from the end
+                                        value = value.toString();
+                                        value = value.split(/(?=(?:...)*$)/);
+                                        
+                                        // Convert the array to a string and format the output
+                                        value = value.join('.');
+                                        return 'S/.' + value;
+                                        }
+                                    }
+                                }]
                             }
-                        }
-					}]
-				}
-				}
+                            }
+                    });
+
+                },2000); // tiempo de carga
+
+            }
         });
+        //hasta aqui
+
+     
 
     });
     });
