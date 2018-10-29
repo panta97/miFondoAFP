@@ -161,12 +161,17 @@
 
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <div class="form-group mb50">
+                    <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModalGraph" id="modalGraph">Gráfica</button>
+                </div>
+            </div>
+            <div class="col-md-3">
                 <div class="form-group mb50">
                     <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal" id="modal">Detalle</button>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="form-group mb50">
                     <input type="submit" value="Calcular" class="btn btn-primary btn-block">
                 </div>
@@ -175,11 +180,13 @@
 
         </form>
         </div>
-        <div class="col-md-6" id="graph-tables">
+        <div class="col-md-6">
             
             <div id="div-loader" class="loader">
                 <div id="loader-ajax"></div>
             </div>
+
+            <div id="graph-tables"></div>
             
         </div>
     </div>
@@ -250,6 +257,31 @@
     </div>
   </div>
 
+    <!-- Modal -->
+  <div class="modal fade" id="myModalGraph" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Gráfica tasa</h4>
+        </div>
+        <div class="modal-body">
+            
+            <div class="row" id="rowcanvasGraph">
+                <canvas id="canvasGraph" width="2136" height="2068" class="chartjs-render-monitor"></canvas>
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
 
 <script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
 <!-- toggle univerdad -->
@@ -286,6 +318,102 @@
     })
 </script>
 
+<!-- cargar grafico -->
+<script>
+    $( "#modalGraph" ).click(function() {
+        // alert( "Handler for .click() called." );
+        // load data to graph
+        var data = $("#my-form :input").serializeArray();
+        formValues = data
+
+        const edadJubilacion = 65
+        edad = (new Date().getFullYear()) - Number(formValues[0].value.split("-", 1))
+
+        datos = []
+
+        for (let i = 0; i < edadJubilacion - edad; i++) {
+            
+            datos.push(i*10)
+          
+        }
+
+        
+
+        var barChartData = {
+            labels: getYears(edad, edadJubilacion),
+            datasets: [{
+                label: 'SBS',
+                backgroundColor: "rgba(138,197,242,1)",
+                borderColor: "rgba(45,143,230,1)",
+                borderWidth: 1,
+                data: datos,
+                fill: false,
+            }, {
+                label: 'Azure ML',
+                backgroundColor: "rgba(253,159,180,1)",
+                borderColor: "rgba(252,72,113,1)",
+                borderWidth: 1,
+                data: datos,
+                fill: false,
+            }],
+        }
+        var ctx = document.getElementById('canvasGraph').getContext('2d');
+        window.myBar = new Chart(ctx, {
+            type: 'line',
+            data: barChartData,
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Comisión por flujo'
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Edad'
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Monto'
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            // Return an empty string to draw the tick line but hide the tick label
+                            // Return `null` or `undefined` to hide the tick line entirely
+                            userCallback: function(value, index, values) {
+                                // Convert the number to a string and splite the string every 3 charaters from the end
+                                value = value.toString();
+                                value = value.split(/(?=(?:...)*$)/);
+                                // Convert the array to a string and format the output
+                                value = value.join('.');
+                                return 'S/.' + value;
+                            }
+                        }
+                    }]
+                }
+            }
+        });
+
+    });
+
+</script>
+
 <script>
 
 
@@ -309,6 +437,12 @@
     $(function() { //shorthand document.ready function
     $('#my-form').on('submit', function(e) { //use on if jQuery 1.7+
         e.preventDefault();  //prevent form from submitting
+
+        // limpiar anterior
+        $('#graph-tables').empty();
+
+        // show class loader
+        $('#div-loader').show();
 
         // poner clase loader
         $("#loader-ajax").addClass("loader_ajax_small")
@@ -365,7 +499,7 @@
                 console.log('before');
                 setTimeout(function(){
 
-                    // remove class loader
+                    // hide class loader
                     $('#div-loader').hide();
 
                     console.log('after');
