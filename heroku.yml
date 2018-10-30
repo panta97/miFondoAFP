@@ -1,0 +1,6 @@
+setup:
+  config: {}
+build:
+  languages:
+    - >-
+      https://buildpack-registry.s3.amazonaws.com/buildpacks/jincod/dotnetcore.tgz
