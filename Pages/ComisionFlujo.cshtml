@@ -331,7 +331,7 @@
 
         for (let i = 0; i < edadJubilacion - edad; i++) {
             
-            datos.push(i*10)
+            datos.push(i*0.1)
           
         }
 
@@ -400,7 +400,7 @@
                                 value = value.split(/(?=(?:...)*$)/);
                                 // Convert the array to a string and format the output
                                 value = value.join('.');
-                                return 'S/.' + value;
+                                return value + '%';
                             }
                         }
                     }]
